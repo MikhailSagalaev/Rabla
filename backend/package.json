@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@evershop/evershop": "^1.2.1"
+  },
+  "scripts": {
+    "dev": "evershop dev",
+    "build": "evershop build",
+    "start": "evershop start"
+  }
+}

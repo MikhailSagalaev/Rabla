@@ -4,7 +4,8 @@ import Header from '../../components/Layout/Header/Header';
 import Footer from '../../components/Layout/Footer/Footer';
 import CategoriesSection from '../../components/Sections/CategoriesSection';
 import PopularProductsSection from '../../components/Sections/PopularProductsSection';
-import RecommendedProductsSection from '../../components/Sections/RecommendedProductsSection';  
+import RecommendedProductsSection from '../../components/Sections/RecommendedProductsSection';
+import BrandSection from '../../components/Sections/BrandSection';
 
 const Home: React.FC = () => {
   return (
@@ -41,6 +42,9 @@ const Home: React.FC = () => {
           <ScrollIndicator />
         </div>
       </section>
+
+      {/* Бренд ESTIMA */}
+      <BrandSection />
 
       {/* Категории */}
       <section className="container mx-auto px-20 mt-32">

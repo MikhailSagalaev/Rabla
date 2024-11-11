@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import ProductCard from '../Product/ProductCard';
 import Button from '../UI/Button';
-import { recommendedProducts } from '../../data/products';
-import { Product } from '../../types/product.types';
+import { getRecommendedProducts } from '../../data/products';
+import { ProductData } from '../../types/product.types';
 
 const RecommendedProductsSection: React.FC = () => {
   const [visibleProducts, setVisibleProducts] = useState(6);
-  const hasMoreProducts = visibleProducts < recommendedProducts.length;
+  const products = getRecommendedProducts(visibleProducts);
 
   const handleShowMore = () => {
-    setVisibleProducts(prev => Math.min(prev + 6, recommendedProducts.length));
+    setVisibleProducts(prev => Math.min(prev + 6, getRecommendedProducts().length));
   };
 
   return (
@@ -20,15 +20,15 @@ const RecommendedProductsSection: React.FC = () => {
 
       <div className="mt-12 w-full max-w-[1043px] max-md:mt-10 max-md:max-w-full">
         <div className="grid grid-cols-3 gap-5 max-md:grid-cols-1">
-          {recommendedProducts.slice(0, visibleProducts).map((product: Product) => (
+          {products.map((product: ProductData) => (
             <div key={product.id} className="w-full">
-              <ProductCard {...product} />
+              <ProductCard {...product} viewMode="grid" />
             </div>
           ))}
         </div>
       </div>
 
-      {hasMoreProducts && (
+      {visibleProducts < getRecommendedProducts().length && (
         <Button 
           onClick={handleShowMore}
           fullWidth

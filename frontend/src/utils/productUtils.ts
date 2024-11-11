@@ -2,7 +2,6 @@ import { Product, ProductData } from '../types/product.types';
 
 export const convertToProductData = (product: Product): ProductData => ({
   ...product,
-  image: product.imageSrc,
   imageSrc: product.imageSrc
 });
 

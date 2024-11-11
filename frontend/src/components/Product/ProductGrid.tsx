@@ -1,35 +1,41 @@
 import React from 'react';
-import ProductCard from './ProductCard';
 import { ProductData } from '../../types/product.types';
+import ProductCard from './ProductCard'; // Используем относительный путь в той же папке
 
 interface ProductGridProps {
   products: ProductData[];
   viewMode?: 'grid' | 'list';
   loading?: boolean;
+  columns?: number;
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({ 
   products, 
   viewMode = 'grid',
-  loading = false 
+  loading = false,
+  columns = 3 
 }) => {
-  if (loading) {
-    return <div className="animate-pulse">Loading...</div>;
-  }
-
   return (
-    <div className={`
-      ${viewMode === 'grid' 
-        ? 'grid grid-cols-3 gap-6' 
-        : 'flex flex-col gap-4'
-      }
-    `}>
-      {products.map((product) => (
-        <ProductCard 
-          key={product.id} 
-          {...product} 
-        />
-      ))}
+    <div className="space-y-6">
+      <div className={`grid gap-6 ${
+        viewMode === 'grid' 
+          ? `grid-cols-${columns}` 
+          : 'grid-cols-1'
+      }`}>
+        {products.map(product => (
+          <ProductCard 
+            key={product.id} 
+            {...product} 
+            viewMode={viewMode}
+          />
+        ))}
+      </div>
+      
+      {loading && (
+        <div className="flex justify-center mt-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black" />
+        </div>
+      )}
     </div>
   );
 };

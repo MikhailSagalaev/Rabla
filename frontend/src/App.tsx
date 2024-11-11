@@ -1,8 +1,8 @@
 import React from 'react';
-import './index.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
-import CatalogPage from './pages/Catalog/CatalogPage';
+import CatalogPage from './pages/Catalog';
+import CategoryCatalog from './pages/Catalog/CategoryCatalog';
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/catalog" element={<CatalogPage />} />
+        <Route path="/catalog/:category" element={<CategoryCatalog />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,456 +1,400 @@
 import { ProductData } from '../types/product.types';
 
-const productImages = [
-  'https://cdn.leroymerlin.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1692972628/lmcode/SELnZ7nutEKgLmrR-pWTYQ/82565305.png',
-  'https://cdn.leroymerlin.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1668585106/lmcode/IMXttfWOBUe2VIAPqxzcZw/17356206.jpg',
-  'https://cdn.leroymerlin.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1686319463/lmcode/UdLCCLWFt0KyEjhnk6ua2Q/88449090.jpg'
-];
-
-const getRandomImage = () => {
-  const randomIndex = Math.floor(Math.random() * productImages.length);
-  return productImages[randomIndex];
-};
-
-export const recommendedProducts: ProductData[] = [
+export const products: ProductData[] = [
   {
     id: 1,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Ванна акриловая",
-    name: "TRITON Стандарт 170*70 см",
-    price: "15990 ₽",
-    discount: "20%"
+    name: "Ванна ESTIMA Comfort",
+    category: "baths",
+    price: "89990",
+    imageSrc: "/images/products/bath-1.jpg",
+    discount: "-15%"
   },
   {
     id: 2,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Душевая кабина",
-    name: "NIAGARA Премиум 90x90 см",
-    price: "32990 ₽",
-    discount: "15%"
+    name: "Смеситель ESTIMA Luxe",
+    category: "mixers",
+    price: "12990",
+    imageSrc: "/images/products/mixer-1.jpg"
   },
   {
     id: 3,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(), 
-    category: "Ванна чугунная",
-    name: "GOLDMAN Классик 170x70 см",
-    price: "42990 ₽",
-    discount: "30%"
+    name: "Тумба ESTIMA Premium",
+    category: "furniture",
+    price: "45990",
+    imageSrc: "/images/products/furniture-1.jpg",
+    discount: "-10%"
   },
   {
     id: 4,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Ванна стальная",
-    name: "ROCA CONTESA 150x70 см", 
-    price: "17990 ₽",
-    discount: "10%"
+    name: "Ванна ESTIMA Elite",
+    category: "baths",
+    price: "199990",
+    imageSrc: "/images/products/bath-2.jpg"
   },
   {
     id: 5,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Душевой уголок",
-    name: "BRAVAT Neo BS090.3110A",
-    price: "23990 ₽",
-    discount: "20%"
+    name: "Смеситель ESTIMA Classic",
+    category: "mixers",
+    price: "8990",
+    imageSrc: "/images/products/mixer-2.jpg",
+    discount: "-20%"
   },
   {
     id: 6,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Ванна акриловая",
-    name: "TRITON Эмма 170x70 см",
-    price: "18990 ₽", 
-    discount: "25%"
+    name: "Шкаф ESTIMA Modern",
+    category: "furniture",
+    price: "34990",
+    imageSrc: "/images/products/furniture-2.jpg"
   },
   {
     id: 7,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Унитаз-компакт",
-    name: "SANITA LUXE Best Lux",
-    price: "13990 ₽",
-    discount: "25%"
-  }
-];
-
-// Полный список 30 товаров для каталога
-export const catalogProducts: ProductData[] = [
-  {
-    id: 1,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    name: "TRITON Аура 150*70 см",
-    category: "Ванна акриловая",
-    price: "16553 ₽",
-    discount: "35%"
-  },
-  {
-    id: 2,
-    name: "ROCA CONTESA 170*70 см",
-    category: "Ванна стальная", 
-    price: "19990 ₽",
-    discount: "15%",
-    imageSrc: getRandomImage()
-  },
-  {
-    id: 3,
-    name: "GOLDMAN Classic 170*75 см",
-    category: "Ванна чугунная",
-    price: "45990 ₽", 
-    discount: "10%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
-  },
-  {
-    id: 4,
-    name: "NIAGARA Premium 90*90 см",
-    category: "Душевая кабина",
-    price: "32990 ₽",
-    discount: "25%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
-  },
-  {
-    id: 5,
-    name: "CERSANIT Parva подвесной",
-    category: "Унитаз",
-    price: "12990 ₽",
-    discount: "30%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
-  },
-  {
-    id: 6,
-    name: "ROCA Gap 60 см",
-    category: "Раковина",
-    price: "8990 ₽",
-    discount: "15%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
-  },
-  {
-    id: 7,
-    name: "GROHE Eurosmart для раковины",
-    category: "Смеситель",
-    price: "5990 ₽",
-    discount: "20%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    name: "Ванна ESTIMA Premium Plus",
+    category: "baths",
+    price: "159990",
+    imageSrc: "/images/products/bath-3.jpg",
+    discount: "-10%"
   },
   {
     id: 8,
-    name: "RAVAK Rosa II 170*105 см правая",
-    category: "Ванна акриловая",
-    price: "29990 ₽",
-    discount: "15%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    name: "Смеситель ESTIMA Gold",
+    category: "mixers",
+    price: "24990",
+    imageSrc: "/images/products/mixer-3.jpg"
+  }
+];
+
+export const brandProducts: ProductData[] = [
+  {
+    id: 101,
+    name: "Ванна ESTIMA Comfort",
+    category: "baths",
+    price: "89990",
+    imageSrc: "/images/products/estima-1.jpg",
+    discount: "-15%"
   },
   {
-    id: 9,
-    name: "CERSANIT Nano 90*90 см",
-    category: "Душевая кабина",
-    price: "28990 ₽",
-    discount: "20%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 102,
+    name: "Ванна ESTIMA Luxe",
+    category: "baths",
+    price: "129990",
+    imageSrc: "/images/products/estima-2.jpg"
   },
   {
-    id: 10,
-    name: "LAUFEN Pro подвесной",
-    category: "Унитаз",
-    price: "15990 ₽",
-    discount: "25%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 103,
+    name: "Ванна ESTIMA Premium",
+    category: "baths",
+    price: "159990",
+    imageSrc: "/images/products/estima-3.jpg",
+    discount: "-10%"
   },
   {
-    id: 11,
-    name: "VILLEROY & BOCH Subway 3.0",
-    category: "Раковина",
-    price: "12990 ₽",
-    discount: "10%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 104,
+    name: "Ванна ESTIMA Elite",
+    category: "baths",
+    price: "199990",
+    imageSrc: "/images/products/estima-4.jpg"
   },
   {
-    id: 12,
-    name: "HANSGROHE Talis E 110",
-    category: "Смеситель",
-    price: "7990 ₽",
-    discount: "15%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 105,
+    name: "Ванна ESTIMA Royal",
+    category: "baths",
+    price: "229990",
+    imageSrc: "/images/products/estima-5.jpg",
+    discount: "-20%"
   },
   {
-    id: 13,
-    name: "BLB Europa 170*70 см",
-    category: "Ванна стальная",
-    price: "17990 ₽",
-    discount: "20%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 106,
+    name: "Смеситель ESTIMA Diamond",
+    category: "mixers",
+    price: "44990",
+    imageSrc: "/images/products/estima-6.jpg",
+    discount: "-15%"
   },
   {
-    id: 14,
-    name: "AQUATEK Альфа",
-    category: "Душевая кабина",
-    price: "35990 ₽",
-    discount: "30%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 107,
+    name: "Душевая кабина ESTIMA Premium",
+    category: "showers", 
+    price: "159990",
+    imageSrc: "/images/products/estima-7.jpg"
   },
   {
-    id: 15,
-    name: "DURAVIT D-Neo",
-    category: "Унитаз",
-    price: "18990 ₽",
-    discount: "15%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 108,
+    name: "Раковина ESTIMA Elegance",
+    category: "sinks",
+    price: "49990",
+    imageSrc: "/images/products/estima-8.jpg",
+    discount: "-25%"
   },
   {
-    id: 16,
-    name: "KERAMAG iCon 75 см",
-    category: "Раковина",
-    price: "9990 ₽",
-    discount: "25%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 109,
+    name: "Ванна ESTIMA Imperial",
+    category: "baths",
+    price: "279990",
+    imageSrc: "/images/products/estima-9.jpg"
   },
   {
-    id: 17,
-    name: "KLUDI Pure&Style",
-    category: "Смеситель",
-    price: "6590 ₽",
-    discount: "20%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 110,
+    name: "Смеситель ESTIMA Crystal",
+    category: "mixers",
+    price: "39990",
+    imageSrc: "/images/products/estima-10.jpg",
+    discount: "-30%"
   },
   {
-    id: 18,
-    name: "KALDEWEI Saniform Plus",
-    category: "Ванна стальная",
-    price: "21990 ₽",
-    discount: "15%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 111,
+    name: "Душевая система ESTIMA Deluxe",
+    category: "showers",
+    price: "89990",
+    imageSrc: "/images/products/estima-11.jpg",
+    discount: "-10%"
   },
   {
-    id: 19,
-    name: "RADAWAY Premium Plus DWD",
-    category: "Душевая кабина",
-    price: "39990 ₽",
-    discount: "20%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 112,
+    name: "Раковина ESTIMA Modern",
+    category: "sinks",
+    price: "34990",
+    imageSrc: "/images/products/estima-12.jpg"
   },
   {
-    id: 20,
-    name: "IDEAL STANDARD Connect Air",
-    category: "Унитаз",
-    price: "16990 ₽",
-    discount: "25%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 113,
+    name: "Ванна ESTIMA Supreme Plus",
+    category: "baths",
+    price: "299990",
+    imageSrc: "/images/products/estima-13.jpg",
+    discount: "-20%"
   },
   {
-    id: 21,
-    name: "GEBERIT Selnova Square",
-    category: "Раковина",
-    price: "11990 ₽",
-    discount: "15%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 114,
+    name: "Смеситель ESTIMA Platinum",
+    category: "mixers",
+    price: "54990",
+    imageSrc: "/images/products/estima-14.jpg",
+    discount: "-15%"
+  }
+];
+
+export const recommendedProducts: ProductData[] = [
+  {
+    id: 201,
+    name: "Ванна ESTIMA Deluxe",
+    category: "baths",
+    price: "179990",
+    imageSrc: "/images/products/recommended-1.jpg",
+    discount: "-20%"
   },
   {
-    id: 22,
-    name: "BRAVAT Spring",
-    category: "Смеситель",
-    price: "5990 ₽",
-    discount: "30%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 202,
+    name: "Смеситель ESTIMA Premium",
+    category: "mixers", 
+    price: "34990",
+    imageSrc: "/images/products/recommended-2.jpg",
+    discount: "-15%"
   },
   {
-    id: 23,
-    name: "ROCA Princess-N 170*75",
-    category: "Ванна стальная",
-    price: "23990 ₽",
-    discount: "20%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 203,
+    name: "Душевая кабина ESTIMA Luxe",
+    category: "showers",
+    price: "89990", 
+    imageSrc: "/images/products/recommended-3.jpg",
+    discount: "-25%"
   },
   {
-    id: 24,
-    name: "HUPPE Design Pure",
-    category: "Душевая кабина",
-    price: "42990 ₽",
-    discount: "15%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 204,
+    name: "Раковина ESTIMA Classic",
+    category: "sinks",
+    price: "29990",
+    imageSrc: "/images/products/recommended-4.jpg",
+    discount: "-10%"
   },
   {
-    id: 25,
-    name: "VITRA S50",
-    category: "Унитаз",
-    price: "14990 ₽",
-    discount: "25%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 205,
+    name: "Смеситель ESTIMA Modern",
+    category: "mixers",
+    price: "39990",
+    imageSrc: "/images/products/recommended-5.jpg",
+    discount: "-30%"
   },
   {
-    id: 26,
-    name: "JACOB DELAFON Struktura",
-    category: "Раковина",
-    price: "10990 ₽",
-    discount: "20%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 206,
+    name: "Ванна ESTIMA Supreme",
+    category: "baths",
+    price: "249990",
+    imageSrc: "/images/products/recommended-6.jpg",
+    discount: "-15%"
   },
   {
-    id: 27,
-    name: "AM.PM Spirit V2.0",
-    category: "Смеситель",
-    price: "6990 ₽",
-    discount: "30%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 207,
+    name: "Душевая система ESTIMA Pro",
+    category: "showers",
+    price: "79990",
+    imageSrc: "/images/products/recommended-7.jpg",
+    discount: "-20%"
   },
   {
-    id: 28,
-    name: "EXCELLENT Oceana 180*80",
-    category: "Ванна акриловая",
-    price: "31990 ₽",
-    discount: "15%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 208,
+    name: "Раковина ESTIMA Premium",
+    category: "sinks",
+    price: "44990",
+    imageSrc: "/images/products/recommended-8.jpg",
+    discount: "-25%"
   },
   {
-    id: 29,
-    name: "KAISER Linear 57182",
-    category: "Душевая стойка",
-    price: "21990 ₽",
-    discount: "20%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 209,
+    name: "Смеситель ESTIMA Elite",
+    category: "mixers",
+    price: "54990",
+    imageSrc: "/images/products/recommended-9.jpg",
+    discount: "-10%"
   },
   {
-    id: 30,
-    name: "SANITA LUXE Best Lux",
-    category: "Унитаз-компакт",
-    price: "13990 ₽",
-    discount: "25%",
-    image: getRandomImage(),
-    imageSrc: getRandomImage()
+    id: 210,
+    name: "Ванна ESTIMA Royal",
+    category: "baths",
+    price: "299990",
+    imageSrc: "/images/products/recommended-10.jpg",
+    discount: "-20%"
+  },
+  {
+    id: 211,
+    name: "Душевая панель ESTIMA Deluxe",
+    category: "showers",
+    price: "129990",
+    imageSrc: "/images/products/recommended-11.jpg",
+    discount: "-15%"
+  },
+  {
+    id: 212,
+    name: "Раковина ESTIMA Modern",
+    category: "sinks",
+    price: "34990",
+    imageSrc: "/images/products/recommended-12.jpg",
+    discount: "-30%"
+  },
+  {
+    id: 213,
+    name: "Смеситель ESTIMA Classic",
+    category: "mixers",
+    price: "29990",
+    imageSrc: "/images/products/recommended-13.jpg",
+    discount: "-25%"
+  },
+  {
+    id: 214,
+    name: "Ванна ESTIMA Comfort",
+    category: "baths",
+    price: "189990",
+    imageSrc: "/images/products/recommended-14.jpg",
+    discount: "-20%"
   }
 ];
 
 export const interiorProducts: ProductData[] = [
   {
-    id: 1,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Штукатурка",
-    name: "LITOKOL Litoplan Base 25 кг",
-    price: "372 ₽"
+    id: 301,
+    name: "Ванна ESTIMA Interior",
+    category: "baths",
+    price: "149990",
+    imageSrc: "/images/products/interior-1.jpg"
   },
   {
-    id: 2,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Ванна акриловая",
-    name: "RAVAK Rosa II 170*105 см правая",
-    price: "29990 ₽",
-    discount: "15%"
+    id: 302,
+    name: "Тумба ESTIMA Modern",
+    category: "furniture",
+    price: "49990",
+    imageSrc: "/images/products/interior-2.jpg"
   },
   {
-    id: 3,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Плитка настенная",
-    name: "KERAMA MARAZZI Гран-Виа 30*60 см",
-    price: "1290 ₽",
-    discount: "10%"
+    id: 303,
+    name: "Зеркало ESTIMA Elegance",
+    category: "furniture", 
+    price: "29990",
+    imageSrc: "/images/products/interior-3.jpg"
   },
   {
-    id: 4,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(), 
-    category: "Смеситель для раковины",
-    name: "GROHE Eurosmart 33265002",
-    price: "8490 ₽"
+    id: 304,
+    name: "Шкаф ESTIMA Storage",
+    category: "furniture",
+    price: "69990",
+    imageSrc: "/images/products/interior-4.jpg"
   },
   {
-    id: 5,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Ламинат",
-    name: "QUICK STEP Eligna 32 класс дуб венге",
-    price: "1890 ₽",
-    discount: "20%"
+    id: 305,
+    name: "Полка ESTIMA Wall",
+    category: "furniture",
+    price: "19990",
+    imageSrc: "/images/products/interior-5.jpg"
   },
   {
-    id: 6,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Обои виниловые",
-    name: "VICTORIA STENOVA Джунгли 1.06*10 м",
-    price: "2490 ₽"
+    id: 306,
+    name: "Комод ESTIMA Classic",
+    category: "furniture",
+    price: "54990",
+    imageSrc: "/images/products/interior-6.jpg"
   },
   {
-    id: 7,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Краска интерьерная",
-    name: "TIKKURILA Harmony 9л матовая",
-    price: "5990 ₽",
-    discount: "15%"
+    id: 307,
+    name: "Пенал ESTIMA Tall",
+    category: "furniture",
+    price: "44990",
+    imageSrc: "/images/products/interior-7.jpg"
   },
   {
-    id: 8,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Паркет",
-    name: "TARKETT Tango Classic Дуб Рустик",
-    price: "3290 ₽"
+    id: 308,
+    name: "Стеллаж ESTIMA Open",
+    category: "furniture",
+    price: "39990",
+    imageSrc: "/images/products/interior-8.jpg"
   },
   {
-    id: 9,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Керамогранит",
-    name: "ESTIMA Standard ST04 60*60 см",
-    price: "890 ₽",
-    discount: "25%"
+    id: 309,
+    name: "Тумба ESTIMA Compact",
+    category: "furniture",
+    price: "34990",
+    imageSrc: "/images/products/interior-9.jpg"
   },
   {
-    id: 10,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Декоративный камень",
-    name: "WHITE HILLS Берн угловой элемент",
-    price: "1490 ₽"
+    id: 310,
+    name: "Шкаф ESTIMA Premium",
+    category: "furniture",
+    price: "79990",
+    imageSrc: "/images/products/interior-10.jpg"
   },
   {
-    id: 11,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Потолочная плитка",
-    name: "ARMSTRONG Retail Board 600*600 мм",
-    price: "290 ₽"
-  },
-  {
-    id: 12,
-    image: getRandomImage(),
-    imageSrc: getRandomImage(),
-    category: "Линолеум",
-    name: "TARKETT Force Canvas 3 3.5м",
-    price: "890 ₽",
-    discount: "30%"
+    id: 311,
+    name: "Зеркало ESTIMA Lux",
+    category: "furniture",
+    price: "39990",
+    imageSrc: "/images/products/interior-11.jpg"
   }
 ];
+
+export const catalogProducts: ProductData[] = [
+  ...products,
+  ...brandProducts,
+  ...recommendedProducts,
+  ...interiorProducts
+];
+
+export const getProductById = (id: number): ProductData | undefined => {
+  return catalogProducts.find(product => product.id === id);
+};
+
+export const getProductsByCategory = (category: string): ProductData[] => {
+  return catalogProducts.filter(product => product.category === category);
+};
+
+export const getDiscountedProducts = (): ProductData[] => {
+  return catalogProducts.filter(product => product.discount);
+};
+
+export const getPopularProducts = (limit: number = 4): ProductData[] => {
+  return catalogProducts.slice(0, limit);
+};
+
+export const getRecommendedProducts = (limit: number = 4): ProductData[] => {
+  return recommendedProducts.slice(0, limit);
+};
+
+export const getInteriorProducts = (limit: number = 4): ProductData[] => {
+  return interiorProducts.slice(0, limit);
+};

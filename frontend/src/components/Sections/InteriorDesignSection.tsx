@@ -10,7 +10,7 @@ const InteriorDesignSection: React.FC = () => {
       <div className="self-end w-full max-w-[1285px] max-md:max-w-full">
         <div className="flex gap-5 max-md:flex-col">
           {interiorProducts.map((product: Product) => (
-            <ProductCard key={product.id} {...product} />
+            <ProductCard key={product.id} {...product} viewMode="grid" />
           ))}
         </div>
       </div>

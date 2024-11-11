@@ -3,22 +3,14 @@ import { Link } from 'react-router-dom';
 
 const Logo: React.FC = () => {
   return (
-    <div className="flex flex-col text-base leading-none text-center">
+    <Link to="/" className="transition-opacity hover:opacity-80">
       <img 
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/58fc832781f40ae14ec10279871c69c509a0c47eb73e45658047edd9bd0cb0df" 
-        alt="Company Logo" 
-        className="object-contain self-center w-28 max-w-full aspect-[3.73]"
         loading="lazy" 
+        src="https://cdn.builder.io/api/v1/image/assets/88cd18cb416f431783e515601f7fda51/65164c5d1487fff497cc0290d5cddab51a059e47b69a7cb61a43cec207fd6d77" 
+        alt="Company Logo" 
+        className="object-contain shrink-0 self-stretch my-auto w-28 aspect-[3.73]" 
       />
-      <div className="flex gap-9 mt-6">
-        <Link to="/bestsellers" className="grow shrink w-20">
-          хиты продаж
-        </Link>
-        <Link to="/recommended" className="grow shrink w-[185px]">
-          вас может заинтерисовать
-        </Link>
-      </div>
-    </div>
+    </Link>
   );
 };
 

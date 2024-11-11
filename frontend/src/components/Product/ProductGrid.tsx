@@ -1,9 +1,9 @@
 import React from 'react';
 import ProductCard from './ProductCard';
-import { Product } from '../../types/product.types';
+import { ProductData } from '../../types/product.types';
 
 interface ProductGridProps {
-  products: Product[];
+  products: ProductData[];
   viewMode?: 'grid' | 'list';
   loading?: boolean;
 }
@@ -28,7 +28,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
         <ProductCard 
           key={product.id} 
           {...product} 
-          viewMode={viewMode}
         />
       ))}
     </div>

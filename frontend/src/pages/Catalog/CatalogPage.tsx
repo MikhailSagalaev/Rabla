@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import Header from '../../components/Layout/Header/Header';
-import Footer from '../../components/Layout/Footer/Footer';
 import ProductGrid from '../../components/Product/ProductGrid';
 import { catalogProducts } from '../../data/products';
-import { ViewMode } from '../../types/product.types';
+import Footer from '../../components/Layout/Footer/Footer';
+import Header from '../../components/Layout/Header/Header';
 
 const CatalogPage: React.FC = () => {
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [loading, setLoading] = useState(false);
 
   return (

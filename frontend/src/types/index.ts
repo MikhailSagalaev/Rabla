@@ -5,7 +5,7 @@ export interface ProductData {
     category: string;
     price: string;
     discount?: string;
-    imageSrc: string;
+    image: string;
     description?: string;
     specifications?: Record<string, string>;
     inStock?: boolean;

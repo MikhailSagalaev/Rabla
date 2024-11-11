@@ -1,0 +1,17 @@
+/* Дополнительные глобальные стили */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+    background-color: #f2f2f2;
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Сброс стилей для изображений */
+img {
+  max-width: 100%;
+  display: block;
+} 

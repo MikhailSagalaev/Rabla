@@ -1,54 +1,32 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Product } from '../../types/product.types';
+import { ProductData } from '../../types/product.types';
 
-interface ProductCardProps extends Product {
-  viewMode?: 'grid' | 'list';
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({
-  id,
-  name,
-  category,
-  price,
-  discount,
-  imageSrc,
-  viewMode = 'grid'
+const ProductCard: React.FC<ProductData> = ({ 
+  discount, 
+  image,
+  category, 
+  name, 
+  price 
 }) => {
   return (
-    <motion.div
+    <motion.article 
+      className="flex flex-col bg-white group"
       whileHover={{ y: -5 }}
       transition={{ duration: 0.2 }}
     >
-      <Link 
-        to={`/product/${id}`}
-        className={`
-          block bg-white rounded-lg overflow-hidden
-          ${viewMode === 'list' ? 'flex gap-6 p-4' : 'flex flex-col'}
-        `}
-      >
-        <div className={`
-          relative
-          ${viewMode === 'list' ? 'w-48 h-48' : 'w-full aspect-square'}
-        `}>
-          <img 
-            src={imageSrc} 
-            alt={name}
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-          {discount && (
-            <div className="absolute top-2 left-2 bg-lime-300 px-2 py-1 text-xs font-medium">
-              {discount}
-            </div>
-          )}
-        </div>
-
-        <div className={`
-          flex flex-col
-          ${viewMode === 'list' ? 'flex-1 py-2' : 'p-4'}
-        `}>
+      <div className="relative p-5">
+        {discount && (
+          <div className="absolute top-5 left-5 bg-[#B8E4A9] px-2 py-1 text-xs">
+            {discount}
+          </div>
+        )}
+        <img 
+          src={image}
+          alt={name}
+          className="w-full aspect-square object-contain"
+        />
+        <div className="flex flex-col">
           <span className="text-xs tracking-widest uppercase text-gray-500">
             {category}
           </span>
@@ -70,8 +48,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </button>
           </div>
         </div>
-      </Link>
-    </motion.div>
+      </div>
+    </motion.article>
   );
 };
 

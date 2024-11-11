@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from '../Product/ProductCard';
 import ProductNavigation from '../UI/ProductNavigation';
-import { popularProducts } from '../../data/products';
+import { recommendedProducts } from '../../data/products';
+import { ProductData } from '../../types/product.types';
 
 const PopularProductsSection: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const productsPerPage = 3;
-  const totalPages = Math.ceil(popularProducts.length / productsPerPage);
+  const totalPages = Math.ceil(recommendedProducts.length / productsPerPage);
 
   const paginate = (newDirection: number) => {
     setDirection(newDirection);
     setCurrentPage((prev) => (prev + newDirection + totalPages) % totalPages);
   };
 
-  const currentProducts = popularProducts.slice(
+  const currentProducts = recommendedProducts.slice(
     currentPage * productsPerPage,
     (currentPage + 1) * productsPerPage
   );
@@ -71,7 +72,7 @@ const PopularProductsSection: React.FC = () => {
             }}
             className="grid grid-cols-3 gap-6"
           >
-            {currentProducts.map((product) => (
+            {currentProducts.map((product: ProductData) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}

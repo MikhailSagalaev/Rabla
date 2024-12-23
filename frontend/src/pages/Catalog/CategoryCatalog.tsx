@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useParams } from 'react-router-dom';
 import Header from '../../components/Layout/Header/Header';
 import Footer from '../../components/Layout/Footer/Footer';
 import ProductGrid from '../../components/Product/ProductGrid';
 import { products } from '../../data/products';
 import { ProductData } from '../../types/product.types';
+import ScrollIndicator from '../../components/UI/ScrollIndicator';
 
 interface ViewMode {
   grid: 'grid';
@@ -36,6 +38,7 @@ const FilterIcon: React.FC = () => (
 );
 
 const MainCatalog: React.FC = () => {
+  const { category } = useParams<{ category: string }>();
   const [viewMode, setViewMode] = useState<ViewMode['grid'] | ViewMode['list']>('grid');
   const [loading, setLoading] = useState(false);
   const [displayedProducts, setDisplayedProducts] = useState<ProductData[]>(products.slice(0, 12));
@@ -54,6 +57,39 @@ const MainCatalog: React.FC = () => {
     <div className="flex overflow-hidden flex-col bg-zinc-100">
       <Header />
       
+      <section className="relative h-screen w-full">
+        <div className="absolute inset-0">
+          <img 
+            src="/images/hero/main-bg.png" 
+            alt="Background" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/50" />
+        </div>
+        
+        <div className="relative h-full container mx-auto px-20">
+          <div className="h-full flex items-end justify-between pb-36">
+            <div className="text-white">
+              <div className="flex gap-2 text-sm mb-8">
+                <a href="/" className="hover:text-black">Главная</a>
+                <span>/</span>
+                <a href="/catalog" className="hover:text-black">Каталог</a>
+                <span>/</span>
+                <span className="text-black">{category}</span>
+              </div>
+            </div>
+            <div className="max-w-[600px] text-white">
+              <h1 className="text-7xl font-light mb-8">{category}</h1>
+            </div>
+          </div>
+        </div>
+
+        {/* Скролл индикатор */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+          <ScrollIndicator />
+        </div>
+      </section>
+
       <main className="flex flex-col self-center mt-14 w-full max-w-[1206px] px-4 max-md:mt-10">
         {/* Панель управления */}
         <div className="flex gap-5 justify-between items-center w-full max-w-[1169px] mb-8">
@@ -96,22 +132,17 @@ const MainCatalog: React.FC = () => {
         </div>
 
         {/* Сетка продуктов */}
-        <ProductGrid 
-          products={displayedProducts}
-          viewMode={viewMode}
-          loading={loading}
-        />
+        <ProductGrid products={displayedProducts} viewMode={viewMode} />
 
         {/* Кнопка "Показать больше" */}
         {displayedProducts.length < products.length && (
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="self-center px-16 py-5 mt-24 max-w-full text-xs tracking-widest text-center text-white uppercase bg-black w-[872px] hover:bg-gray-900 transition-colors max-md:px-5 max-md:mt-10"
             onClick={loadMore}
-            disabled={loading}
+            className="self-center px-16 py-5 mt-24 text-xs tracking-widest text-white uppercase bg-black w-[872px] hover:bg-gray-900 transition-colors"
           >
-            {loading ? 'Загрузка...' : 'показать больше товаров'}
+            показать больше товаров
           </motion.button>
         )}
       </main>

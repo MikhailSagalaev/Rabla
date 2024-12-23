@@ -10,21 +10,22 @@ interface BreadcrumbItem {
 }
 
 interface HeaderProps {
-  breadcrumbs?: BreadcrumbItem[];
-  title?: string;
+  isFixed?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ breadcrumbs, title }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
+const Header: React.FC<HeaderProps> = ({ isFixed = false }) => {
+  const [isScrolled, setIsScrolled] = useState(isFixed);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 200);
-    };
+    if (!isFixed) {
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > 0);
+      };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
+  }, [isFixed]);
 
   return (
     <header className={`

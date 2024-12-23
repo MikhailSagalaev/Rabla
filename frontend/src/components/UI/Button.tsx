@@ -90,7 +90,6 @@ const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
-
 // Предопределенные варианты кнопок
 export const PrimaryButton: React.FC<ButtonProps> = (props) => (
   <Button variant="primary" {...props} />

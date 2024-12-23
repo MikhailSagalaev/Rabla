@@ -15,3 +15,7 @@ img {
   max-width: 100%;
   display: block;
 } 
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  display: none;
+}

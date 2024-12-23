@@ -27,3 +27,18 @@ export interface FeatureCard {
   description: string;
   icon?: string; // Делаем icon опциональным
 }
+
+export interface ProductDetails extends ProductData {
+  description: string;
+  characteristics: {
+    [key: string]: string;
+  };
+  reviews: Array<{
+    id: number;
+    author: string;
+    rating: number;
+    text: string;
+    date: string;
+  }>;
+  relatedProducts: ProductData[];
+}

@@ -84,7 +84,7 @@ const CartPage: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen flex flex-col bg-zinc-100">
+    <div className="min-h-screen flex flex-col bg-zinc-100 overflow-x-hidden">
       <Header isFixed={true} />
       <main className="flex-grow container mx-auto px-4 py-8 pt-[180px]">
         <button 

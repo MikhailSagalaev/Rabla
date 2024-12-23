@@ -77,7 +77,7 @@ const CatalogPage: React.FC = () => {
   };
 
   return (
-    <div className="flex overflow-hidden flex-col bg-zinc-100">
+    <div className="min-h-screen flex flex-col bg-zinc-100 overflow-x-hidden">
       <Header />
       
       {/* Hero секция */}

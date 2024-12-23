@@ -9,7 +9,7 @@ import BrandSection from '../../components/Sections/BrandSection';
 
 const Home: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#f2f2f2]">
+    <div className="min-h-screen bg-[#f2f2f2] overflow-x-hidden">
       <Header />
       
       {/* Hero секция */}

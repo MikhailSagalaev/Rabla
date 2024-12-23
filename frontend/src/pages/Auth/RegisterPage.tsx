@@ -24,7 +24,7 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-zinc-100">
+    <div className="min-h-screen flex flex-col bg-zinc-100 overflow-x-hidden">
       <Header isFixed={true} />
       
       <main className="flex-grow container mx-auto px-4 py-8 pt-[180px]">
@@ -36,7 +36,7 @@ const RegisterPage: React.FC = () => {
         </button>
 
         <div className="max-w-md mx-auto text-center">
-          <h1 className="text-3xl mb-8">Регистрац��я</h1>
+          <h1 className="text-3xl mb-8">Регистрация</h1>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <input

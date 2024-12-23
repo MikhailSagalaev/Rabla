@@ -110,7 +110,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen flex flex-col bg-zinc-100 overflow-x-hidden">
       <Header isFixed={true} />
       
       <main className="flex-grow container mx-auto px-20 pt-[180px]">

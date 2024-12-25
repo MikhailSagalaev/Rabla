@@ -22,7 +22,10 @@ const RecommendedProductsSection: React.FC = () => {
         <div className="grid grid-cols-3 gap-5 max-md:grid-cols-1">
           {products.map((product: ProductData) => (
             <div key={product.id} className="w-full">
-              <ProductCard {...product} viewMode="grid" />
+              <ProductCard 
+                product={product} 
+                viewMode="grid" 
+              />
             </div>
           ))}
         </div>

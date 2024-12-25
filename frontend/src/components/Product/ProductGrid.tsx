@@ -1,6 +1,6 @@
 import React from 'react';
 import { ProductData } from '../../types/product.types';
-import ProductCard from './ProductCard'; // Используем относительный путь в той же папке
+import ProductCard from './ProductCard';
 
 interface ProductGridProps {
   products: ProductData[];
@@ -24,8 +24,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       }`}>
         {products.map(product => (
           <ProductCard 
-            key={product.id} 
-            {...product} 
+            key={product.id}
+            product={product}
             viewMode={viewMode}
           />
         ))}

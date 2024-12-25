@@ -3,6 +3,8 @@ import Logo from './Logo';
 import NavigationMenu from './NavigationMenu';
 import CitySelector from './CitySelector';
 import HeaderTools from './HeaderTools';
+import { CompareIcon } from '../../UI/Icons';
+import { Link } from 'react-router-dom';
 
 interface BreadcrumbItem {
   label: string;

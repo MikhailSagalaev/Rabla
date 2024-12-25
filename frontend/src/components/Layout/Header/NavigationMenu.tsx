@@ -1,164 +1,129 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-
-interface MenuItem {
-  label: string;
-  link: string;
-  isDropdown?: boolean;
-}
-
-const menuItems: MenuItem[] = [
-  { label: 'каталог', link: '/catalog', isDropdown: true },
-  { label: 'бренды', link: '/brands' },
-  { label: 'новинки', link: '/new' },
-  { label: 'популярные', link: '/popular' },
-  { label: 'хиты продаж', link: '/bestsellers' },
-  { label: 'вас может заинтерисовать', link: '/recommended' },
-  { label: 'о нас', link: '/about' },
-  { label: 'оплата и доставка', link: '/delivery' },
-  { label: 'контакты', link: '/contacts' },
-];
-
-const catalogData = [
-  {
-    id: 1,
-    name: 'Ванны',
-    children: [
-      {
-        id: 11,
-        name: 'Акриловые ванны',
-        children: [
-          { id: 111, name: 'Прямоугольные' },
-          { id: 112, name: 'Угловые' },
-          { id: 113, name: 'Асимметричные' }
-        ]
-      },
-      {
-        id: 12,
-        name: 'Чугунные ванны',
-        children: [
-          { id: 121, name: 'Классические' },
-          { id: 122, name: 'Ретро' }
-        ]
-      }
-    ]
-  },
-  // ... остальные категории
-];
+import { catalogData, Category } from '../../../data/catalog';
 
 const NavigationMenu: React.FC = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeCategories, setActiveCategories] = useState<number[]>([]);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-        setActiveCategories([]);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
 
   const handleMouseEnter = (categoryId: number, level: number) => {
     setActiveCategories(prev => [...prev.slice(0, level), categoryId]);
   };
 
   return (
-    <nav className="relative flex flex-wrap gap-2.5 justify-between items-start mt-6 w-full text-base leading-none text-center text-white">
-      {menuItems.map((item, index) => (
-        <React.Fragment key={index}>
-          {item.isDropdown ? (
-            <div className="relative" ref={dropdownRef}>
-              <button 
-                className="flex items-center gap-1.5 px-px py-1 leading-none whitespace-nowrap hover:opacity-80 transition-opacity"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+    <nav className="flex justify-between items-start w-full">
+      {/* Left Navigation */}
+      <div className="flex flex-col items-start w-full">
+        <div className="flex justify-between text-white mb-2 mt-6 w-full">
+          <div 
+            className="relative flex items-center"
+            onMouseEnter={() => setIsCatalogOpen(true)}
+            onMouseLeave={() => setIsCatalogOpen(false)}
+          >
+            <button className="flex items-center gap-2 whitespace-nowrap">
+              <span>Каталог</span>
+              <motion.svg
+                width="10" height="6" viewBox="0 0 10 6"
+                fill="none" animate={{ rotate: isCatalogOpen ? 180 : 0 }}
               >
-                {item.label}
-                <motion.svg 
-                  width="10" height="6" viewBox="0 0 10 6" fill="none"
-                  animate={{ rotate: isDropdownOpen ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
+                <path d="M1 1L5 5L9 1" stroke="currentColor" />
+              </motion.svg>
+            </button>
+
+            <AnimatePresence>
+              {isCatalogOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute top-full left-0 mt-4 bg-black/90 backdrop-blur-sm shadow-xl rounded-lg z-50"
                 >
-                  <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5"/>
-                </motion.svg>
-              </button>
-
-              <AnimatePresence>
-                {isDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full left-0 mt-2 bg-black/90 backdrop-blur-sm rounded-lg shadow-lg z-50"
-                  >
-                    <div className="flex min-w-[600px]">
-                      {/* Первый уровень */}
-                      <div className="w-1/3 border-r border-white/10">
-                        {catalogData.map(category => (
-                          <div
-                            key={category.id}
-                            className="px-4 py-3 hover:bg-white/10 cursor-pointer"
-                            onMouseEnter={() => handleMouseEnter(category.id, 0)}
-                          >
+                  <div className="flex min-w-[600px]">
+                    {/* Первый уровень */}
+                    <div className="w-1/3 border-r border-white/10">
+                      {catalogData.map(category => (
+                        <div
+                          key={category.id}
+                          className="px-4 py-3 hover:bg-white/10 cursor-pointer"
+                          onMouseEnter={() => handleMouseEnter(category.id, 0)}
+                        >
+                          <Link to={category.path} className="text-white">
                             {category.name}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Второй уровень */}
-                      {activeCategories[0] && (
-                        <div className="w-1/3 border-r border-white/10">
-                          {catalogData
-                            .find(c => c.id === activeCategories[0])
-                            ?.children?.map(subCategory => (
-                              <div
-                                key={subCategory.id}
-                                className="px-4 py-3 hover:bg-white/10 cursor-pointer"
-                                onMouseEnter={() => handleMouseEnter(subCategory.id, 1)}
-                              >
-                                {subCategory.name}
-                              </div>
-                            ))}
+                          </Link>
                         </div>
-                      )}
-
-                      {/* Третий уровень */}
-                      {activeCategories[1] && (
-                        <div className="w-1/3">
-                          {catalogData
-                            .find(c => c.id === activeCategories[0])
-                            ?.children?.find(c => c.id === activeCategories[1])
-                            ?.children?.map(subCategory => (
-                              <div
-                                key={subCategory.id}
-                                className="px-4 py-3 hover:bg-white/10 cursor-pointer"
-                              >
-                                {subCategory.name}
-                              </div>
-                            ))}
-                        </div>
-                      )}
+                      ))}
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ) : (
-            <Link 
-              to={item.link} 
-              className="px-px py-1 whitespace-nowrap hover:opacity-80 transition-opacity"
-            >
-              {item.label}
-            </Link>
-          )}
-        </React.Fragment>
-      ))}
-      <div className="border border-white border-solid min-h-[1px] w-full mt-4" />
+
+                    {/* Второй уровень */}
+                    {activeCategories[0] && (
+                      <div className="w-1/3 border-r border-white/10">
+                        {catalogData
+                          .find(c => c.id === activeCategories[0])
+                          ?.children?.map(subCategory => (
+                            <div
+                              key={subCategory.id}
+                              className="px-4 py-3 hover:bg-white/10 cursor-pointer"
+                              onMouseEnter={() => handleMouseEnter(subCategory.id, 1)}
+                            >
+                              <Link to={subCategory.path} className="text-white">
+                                {subCategory.name}
+                              </Link>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+
+                    {/* Третий уровень */}
+                    {activeCategories[1] && (
+                      <div className="w-1/3">
+                        {catalogData
+                          .find(c => c.id === activeCategories[0])
+                          ?.children?.find(c => c.id === activeCategories[1])
+                          ?.children?.map(subCategory => (
+                            <div
+                              key={subCategory.id}
+                              className="px-4 py-3 hover:bg-white/10 cursor-pointer"
+                            >
+                              <Link to={subCategory.path} className="text-white">
+                                {subCategory.name}
+                              </Link>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+          <Link to="/brands" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            Бренды
+          </Link>
+          <Link to="/new" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            Новинки
+          </Link>
+          <Link to="/popular" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            Популярное
+          </Link>
+          <Link to="/hits" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            Хиты продаж
+          </Link>
+          <Link to="/hits" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            Вас может заинтересовать
+          </Link>
+          <Link to="/about" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            О нас
+          </Link>
+          <Link to="/payment" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            Оплата и доставка
+          </Link>
+          <Link to="/contacts" className="hover:opacity-80 transition-opacity whitespace-nowrap">
+            Контакты
+          </Link>
+        </div>
+        <div className="border border-white border-solid max-h-[1px] w-full" />
+      </div>
     </nav>
   );
 };

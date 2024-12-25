@@ -57,10 +57,10 @@ const CatalogPage: React.FC = () => {
     let sorted = [...displayedProducts];
     switch (option.id) {
       case 'price-asc':
-        sorted.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        sorted.sort((a, b) => a.price - b.price);
         break;
       case 'price-desc':
-        sorted.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        sorted.sort((a, b) => b.price - a.price);
         break;
       case 'name':
         sorted.sort((a, b) => a.name.localeCompare(b.name));
@@ -96,7 +96,7 @@ const CatalogPage: React.FC = () => {
             <div className="max-w-[600px] text-white">
               <h1 className="text-7xl font-light mb-8">Каталог</h1>
               <p className="text-xl mb-12">
-                Широкий выбор товаров для вашей ванной комнаты
+                Широкий выбор ��оваров для вашей ванной комнаты
               </p>
               <motion.button 
                 whileHover={{ scale: 1.05 }}

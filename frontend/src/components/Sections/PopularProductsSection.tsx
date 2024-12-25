@@ -30,8 +30,11 @@ const PopularProductsSection: React.FC = () => {
         >
           {products.map((product) => (
             <SwiperSlide key={product.id} className="!h-auto">
-              <div className="group relative h-full bg-white hover:shadow-lg transition-shadow duration-300">
-                <ProductCard {...product} viewMode="grid" />
+              <div className="group relative h-full">
+                <ProductCard 
+                  product={product} 
+                  viewMode="grid" 
+                />
               </div>
             </SwiperSlide>
           ))}

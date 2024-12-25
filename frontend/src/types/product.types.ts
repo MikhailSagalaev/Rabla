@@ -1,10 +1,30 @@
+import { Review, ReviewStats } from './review.types';
+
 export interface ProductData {
   id: number;
   name: string;
   category: string;
-  price: string;
-  imageSrc: string;
+  price: number;
+  imageSrc?: string;
+  images?: string[];
+  image?: string;
   discount?: string;
+  article: string;
+  manufacturer: string;
+  unit: string;
+  weight: number;
+  description?: string;
+  characteristics?: Record<string, string>;
+  reviews?: Review[];
+  reviewStats?: ReviewStats;
+  inStock?: boolean;
+  isHit?: boolean;
+  isNew?: boolean;
+}
+
+export interface CartItem extends ProductData {
+  quantity: number;
+  selected?: boolean;
 }
 
 export interface ProductViewProps extends ProductData {
@@ -17,28 +37,16 @@ export interface ProductGridConfig {
   columns?: number;
 }
 
-// Если нужен отдельный тип Product
 export type Product = ProductData;
 
 export interface FeatureCard {
   id: string;
-  image: string; // Добавляем поле image
+  image: string;
   title: string;
   description: string;
-  icon?: string; // Делаем icon опциональным
+  icon?: string;
 }
 
 export interface ProductDetails extends ProductData {
-  description: string;
-  characteristics: {
-    [key: string]: string;
-  };
-  reviews: Array<{
-    id: number;
-    author: string;
-    rating: number;
-    text: string;
-    date: string;
-  }>;
   relatedProducts: ProductData[];
 }

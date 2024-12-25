@@ -1,101 +1,110 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
 import ProductCard from '../Product/ProductCard';
 import { brandProducts } from '../../data/products';
 
-const ArrowButton: React.FC<{ direction: 'left' | 'right'; onClick: () => void }> = ({ direction, onClick }) => (
-  <motion.button
-    whileHover={{ scale: 1.1 }}
-    whileTap={{ scale: 0.9 }}
-    className={`absolute top-1/2 ${direction === 'left' ? '-left-12' : '-right-12'} 
-    transform -translate-y-1/2 w-10 h-10 text-black hover:opacity-80 transition-opacity z-10`}
-    onClick={onClick}
-  >
-    <svg 
-      width="24" 
-      height="24" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2"
-      className={direction === 'left' ? 'rotate-180' : ''}
-    >
-      <path d="M9 18l6-6-6-6" />
-    </svg>
-  </motion.button>
-);
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 const BrandSection: React.FC = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const slidesPerView = 4;
-  const totalSlides = Math.ceil(brandProducts.length / slidesPerView);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
-  };
-
   return (
-    <section className="container mx-auto px-20 mt-32 mb-48">
+    <section className="container mx-auto px-20 mt-32">
       {/* Заголовок */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-24"
-      >
-        <h2 className="text-5xl font-light">
-          Новый бренд <span className="font-medium">ESTIMA</span>
-        </h2>
-      </motion.div>
-
-      {/* Основной блок */}
-      <div className="relative">
-        {/* Фоновый блок с картинкой */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+      <div className="relative mb-2000">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative bg-[#1A1A1A] overflow-hidden h-[600px]"
+          className="text-center"
         >
-          <motion.img 
-            initial={{ scale: 1.1 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            src="/images/brand/estima-bg.jpg" 
-            alt="ESTIMA background" 
-            className="w-full h-full object-cover opacity-50"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80" />
+          <h2 className="text-5xl font-light mb-4">
+            Новый бренд <span className="font-medium">ESTIMA</span>
+          </h2>
+          <Link 
+            to="/catalog/estima" 
+            className="inline-block text-lg hover:opacity-80 transition-opacity"
+          >
+            перейти к покупкам →
+          </Link>
         </motion.div>
 
-        {/* Слайдер с товарами */}
-        <div className="absolute -bottom-32 left-0 right-0">
-          <div className="relative px-12">
-            <ArrowButton direction="left" onClick={prevSlide} />
-            <ArrowButton direction="right" onClick={nextSlide} />
-            
-            <div className="overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentSlide}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.5 }}
-                  className="grid grid-cols-4 gap-6"
+        {/* Основной блок */}
+        <div className="mt-8">
+          {/* Фоновый блок с картинкой */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="relative bg-[#1A1A1A] overflow-hidden h-[600px]"
+          >
+            <motion.img 
+              initial={{ scale: 1.1 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/10306e27040109.5635f38b3451c.jpg" 
+              alt="ESTIMA background" 
+              className="w-full h-full object-cover opacity-50"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80" />
+          </motion.div>
+
+          {/* Слайдер с товарами */}
+          <div className="relative -mt-32">
+            <div className="relative px-10">
+              <div 
+                className="absolute -left-16 top-1/2 -translate-y-1/2 z-10 cursor-pointer hover:opacity-80 transition-opacity text-black"
+                onClick={() => document.querySelector('.swiper-button-prev')?.dispatchEvent(new Event('click'))}
+              >
+                <svg 
+                  width="32" 
+                  height="32" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="1.5"
+                  className="rotate-180"
                 >
-                  {brandProducts
-                    .slice(currentSlide * slidesPerView, (currentSlide + 1) * slidesPerView)
-                    .map((product, index) => (
-                      <ProductCard key={product.id} {...product} viewMode="grid" />
-                    ))}
-                </motion.div>
-              </AnimatePresence>
+                  <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <div 
+                className="absolute -right-16 top-1/2 -translate-y-1/2 z-10 cursor-pointer hover:opacity-80 transition-opacity text-black"
+                onClick={() => document.querySelector('.swiper-button-next')?.dispatchEvent(new Event('click'))}
+              >
+                <svg 
+                  width="32" 
+                  height="32" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="1.5"
+                >
+                  <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={24}
+                slidesPerView={4}
+                navigation={true}
+                className="overflow-hidden [&_.swiper-button-next]:!hidden [&_.swiper-button-prev]:!hidden"
+              >
+                {brandProducts.map((product) => (
+                  <SwiperSlide key={product.id} className="!h-auto">
+                    <div className="group relative h-full">
+                      <ProductCard 
+                        product={product} 
+                        viewMode="grid" 
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
           </div>
         </div>

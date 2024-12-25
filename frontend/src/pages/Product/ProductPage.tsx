@@ -11,102 +11,65 @@ import Footer from '../../components/Layout/Footer/Footer';
 import ProductTabs from '../../components/Product/ProductTabs';
 import PopularProductsSection from '../../components/Sections/PopularProductsSection';
 import { HeartIcon, CompareIcon } from '../../components/UI/Icons/index';
+import { ProductData, CartItem } from '../../types/product.types';
+import { Review, ReviewStats } from '../../types/review.types';
+import { getProductById } from '../../data/products';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
+import { useCart } from '../../hooks/useCart';
+import { useCompare } from '../../hooks/useCompare';
 
 interface ProductPageProps {
-  // При необходимости добавьте пропсы
+  // При необходимоси добавьте пропсы
 }
+
+interface Slide {
+  src: string;
+}
+
+const defaultReviewStats: ReviewStats = {
+  averageRating: 0,
+  totalReviews: 0,
+  ratingDistribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+};
 
 const ProductPage: React.FC<ProductPageProps> = () => {
   const { id } = useParams<{ id: string }>();
+  const { addToCart } = useCart();
+  const { addToCompare, removeFromCompare, isInCompare } = useCompare();
   const [quantity, setQuantity] = useState(1);
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [isInFavorites, setIsInFavorites] = useState(false);
-  const [isInCompare, setIsInCompare] = useState(false);
 
-  // Тестовые изображения
-  const productImages = [
-    'https://cdn.lemanapro.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1673360248/lmcode/CEUdBnZ21E6NJWrWSYml9g/84498286.jpg',
-    'https://cdn.lemanapro.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1673360251/lmcode/c_lEc0jGu0-0hqAO5xkrgQ/84498286_01.png',
-    'https://cdn.lemanapro.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1673360251/lmcode/v9yUT2pruEKvIg6-0LlX7A/84498286_02.png',
-    'https://cdn.lemanapro.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1673360251/lmcode/qemKGihGf0u2nTxXezfoOw/84498286_03.png',
-    'https://cdn.lemanapro.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1673360251/lmcode/EmkEyBnc50e9C9HhsrwMfA/84498286_04.png',
-    'https://cdn.lemanapro.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1673360251/lmcode/y0GaUXQpyUiR7Ruwddy9xA/84498286_05.png',
-    'https://cdn.lemanapro.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1673360251/lmcode/8ZZu05xuaUWkYWVOGMpAow/84498286_06.png',
-    'https://cdn.lemanapro.ru/lmru/image/upload/f_auto/q_auto/dpr_1.0/c_pad/w_1000/h_1000/v1673360251/lmcode/XHYxabaDhESKZWCNBeacbg/84498286_07.png',
-  ];
+  const product = getProductById(Number(id));
+  const productInCompare = isInCompare(Number(id));
 
-  const slides = productImages.map(src => ({
+  if (!product) {
+    return <div>Товар не найден</div>;
+  }
+
+  const slides = product.images?.map((src: string) => ({
     src,
+  })) || [];
+
+  const reviews = (product.reviews || []).map((review: Review) => ({
+    ...review,
+    id: String(review.id)
   }));
 
-  // Тестовые данные для отзывов
-  const reviewsData = {
-    stats: {
-      averageRating: 4.7,
-      totalReviews: 128,
-      ratingDistribution: {
-        5: 98,
-        4: 20,
-        3: 6,
-        2: 2,
-        1: 2
-      }
-    },
-    reviews: [
-      {
-        id: '1',
-        author: 'Роман Кравченко',
-        rating: 5,
-        date: '22 сентября 2022',
-        advantages: 'Упакованно по царски... приятно.',
-        disadvantages: 'Цена',
-        text: 'Распаковал, получил отдельный кайф от анбоксинга. Алиса включилась, сама обновилась красота. В комплекте блискучие ненужные наклейки. Брал для подключения умных ламп. Яндекс лампы светят ярче лампы WIZ но стоят огого и весят раза в 3 тежелее обычных. В целом кайф.',
-        likes: 8,
-        dislikes: 5,
-        useTime: 'Использует меньше месяца'
-      },
-      {
-        id: '2',
-        author: 'Виктор',
-        rating: 5,
-        date: '18 декабря 2024',
-        advantages: 'громкости хватает для к��хни, есть выход на усилитель или наушники',
-        disadvantages: 'нет',
-        text: 'очень выгодная цена за эту модель',
-        likes: 3,
-        dislikes: 0,
-        useTime: 'Использует от полугода до года'
-      },
-      {
-        id: '3',
-        author: 'Александр',
-        rating: 4,
-        date: '15 марта 2024',
-        advantages: 'Качество звука, дизайн, компактность',
-        disadvantages: 'Иногда подвисает, нужно перезагружать',
-        text: 'Отличная колонка для дома. Звук чистый, басы хорошие. Алиса понимает команды с первого раза. Единственный минус - редкие зависания.',
-        likes: 15,
-        dislikes: 2,
-        useTime: 'Использует больше года'
-      },
-      {
-        id: '4',
-        author: 'Елена',
-        rating: 5,
-        date: '1 марта 2024',
-        advantages: 'Компактная, стильная, отличный звук',
-        disadvantages: 'Не обнаружила',
-        text: 'Прекрасная колонка! Отлично вписалась в интерьер, зву�� намного лучше, чем ожидала. Алиса работает отлично, музыку включает мгновенно.',
-        likes: 7,
-        dislikes: 1,
-        useTime: 'Использует месяц или два'
-      }
-    ]
+  const handleAddToCart = () => {
+    if (product) {
+      const cartItem: CartItem = {
+        ...product,
+        price: Number(product.price),
+        quantity,
+        selected: true
+      };
+      addToCart(cartItem);
+    }
   };
 
   return (
@@ -120,14 +83,13 @@ const ProductPage: React.FC<ProductPageProps> = () => {
           <span>/</span>
           <a href="/catalog" className="hover:text-black">каталог</a>
           <span>/</span>
-          <a href="/catalog/category" className="hover:text-black">сесители</a>
+          <a href={`/catalog/${product.category.toLowerCase()}`} className="hover:text-black">{product.category.toLowerCase()}</a>
           <span>/</span>
-          <span className="text-black">ESTIMA Cosmos CM 01 Белый</span>
+          <span className="text-black">{product.name}</span>
         </div>
 
-        {/* Основная информация о товаре */}
         <div className="grid grid-cols-2 gap-12">
-          {/* Левая колонка с изображением */}
+          {/* Галерея */}
           <div className="space-y-4">
             <Swiper
               style={{
@@ -141,14 +103,10 @@ const ProductPage: React.FC<ProductPageProps> = () => {
               className="w-full aspect-square cursor-zoom-in"
               onClick={() => setIsOpen(true)}
             >
-              {productImages.map((image, index) => (
+              {product.images?.map((image: string, index: number) => (
                 <SwiperSlide key={index}>
                   <div className="w-full h-full">
-                    <img 
-                      src={image} 
-                      alt={`Product Image ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
+                    <img src={image} alt={`Product ${index + 1}`} className="w-full h-full object-cover" />
                   </div>
                 </SwiperSlide>
               ))}
@@ -163,29 +121,25 @@ const ProductPage: React.FC<ProductPageProps> = () => {
               modules={[Thumbs]}
               className="thumbs-swiper"
             >
-              {productImages.map((image, index) => (
+              {product.images?.map((image, index) => (
                 <SwiperSlide key={index}>
                   <div className="cursor-pointer aspect-square">
-                    <img 
-                      src={image} 
-                      alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
+                    <img src={image} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
 
-          {/* Правая колонка с информацией */}
+          {/* Информация о товаре */}
           <div>
             <div className="mb-6">
-              <span className="text-sm text-gray-500 uppercase">ПЛИТКА БАЗОВАЯ</span>
-              <h1 className="text-2xl font-medium mt-2">ESTIMA Cosmos CM 01 Белый</h1>
+              <span className="text-sm text-gray-500 uppercase">{product.category}</span>
+              <h1 className="text-2xl font-medium mt-2">{product.name}</h1>
             </div>
 
             <div className="mb-8">
-              <span className="text-2xl font-medium">3269 ₽</span>
+              <span className="text-2xl font-medium">{product.price} ₽</span>
             </div>
 
             <div className="flex gap-4 items-center mb-8">
@@ -205,7 +159,10 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                 </button>
               </div>
 
-              <button className="flex-grow bg-black text-white px-6 py-2 hover:bg-gray-900 transition-colors">
+              <button 
+                onClick={handleAddToCart}
+                className="flex-grow bg-black text-white px-6 py-2 hover:bg-gray-900 transition-colors"
+              >
                 ДОБАВИТЬ В КОРЗИНУ
               </button>
 
@@ -217,48 +174,49 @@ const ProductPage: React.FC<ProductPageProps> = () => {
               </button>
 
               <button 
-                onClick={() => setIsInCompare(!isInCompare)}
+                onClick={() => {
+                  if (productInCompare) {
+                    removeFromCompare(Number(id));
+                  } else {
+                    addToCompare(product);
+                  }
+                }}
                 className="p-2 border border-gray-300 hover:bg-gray-100"
               >
-                <CompareIcon className="w-6 h-6" isActive={isInCompare} />
+                <CompareIcon className="w-6 h-6" isActive={productInCompare} />
               </button>
             </div>
 
             {/* Информация о товаре */}
-            <div className="space-y-4 text-sm">
+            <div className="space-y-4 text-sm border-t border-gray-200 pt-8">
               <div className="flex gap-4">
                 <span className="text-gray-500">Артикул:</span>
-                <span>06033287</span>
+                <span>{product.article}</span>
               </div>
               <div className="flex gap-4">
                 <span className="text-gray-500">Производитель:</span>
-                <span>TIKURILLA</span>
+                <span>{product.manufacturer}</span>
               </div>
               <div className="flex gap-4">
                 <span className="text-gray-500">Единица товара:</span>
-                <span>шт</span>
+                <span>{product.unit}</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Табы с информацией о товаре */}
+        {/* Табы и похожие товары */}
         <div className="mt-24">
           <ProductTabs 
-            description="Описание товара..."
-            characteristics={{
-              "Бренд": "ESTIMA",
-              "Коллекция": "Cosmos",
-              // ... остальные характеристики
-            }}
-            reviews={reviewsData.reviews}
-            reviewStats={reviewsData.stats}
+            description={product.description || ''}
+            characteristics={product.characteristics || {}}
+            reviews={reviews}
+            reviewStats={product.reviewStats || defaultReviewStats}
           />
         </div>
 
-        {/* Похожие товары */}
         <section className="mt-32">
-          <h2 className="text-4xl mb-12">Вас может заинтересовать</h2>
+          <h2 className="text-4xl mb-12">Вас ��ожет заинтересовать</h2>
           <PopularProductsSection />
         </section>
       </main>

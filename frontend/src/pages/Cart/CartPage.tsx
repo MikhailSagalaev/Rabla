@@ -33,6 +33,14 @@ const CartPage: React.FC = () => {
     });
   };
 
+  // Используем форматирование через Intl
+  const formatPrice = (amount: number) => {
+    return new Intl.NumberFormat('ru-RU', {
+      style: 'currency',
+      currency: 'RUB'
+    }).format(amount / 100); // Medusa хранит цены в копейках
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-zinc-100">
       <Header />
@@ -133,7 +141,7 @@ const CartPage: React.FC = () => {
                             +
                           </button>
                         </div>
-                        <div className="font-medium">{item.price * item.quantity} ₽</div>
+                        <div className="font-medium">{formatPrice(item.price * item.quantity)}</div>
                         <button 
                           onClick={() => removeItem(item.id)}
                           className="text-red-500 hover:text-red-600 transition-colors ml-auto"
@@ -152,7 +160,7 @@ const CartPage: React.FC = () => {
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between">
                     <span>Товары ({selectedItems.length})</span>
-                    <span>{totalPrice} ₽</span>
+                    <span>{formatPrice(totalPrice)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Вес</span>

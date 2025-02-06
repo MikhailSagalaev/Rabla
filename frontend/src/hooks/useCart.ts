@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ProductData } from '../types/product.types';
+import { useMedusaCart } from '../contexts/MedusaContext';
+import { useCart as useCartContext } from '../contexts/CartContext';
 
 export interface CartItem extends ProductData {
   quantity: number;
@@ -17,20 +19,18 @@ export const useCart = () => {
     localStorage.setItem('cart', JSON.stringify(items));
   }, [items]);
 
-  const addToCart = (product: ProductData) => {
-    setItems(prevItems => {
-      const existingItem = prevItems.find(item => item.id === product.id);
-      
-      if (existingItem) {
-        return prevItems.map(item =>
-          item.id === product.id 
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        return [...prevItems, { ...product, quantity: 1, selected: true }];
-      }
-    });
+  const addToCart = async (productId: string) => {
+    const { data: cart } = useMedusaCart();
+    const { create, update, refresh } = useCartContext();
+
+    if (cart) {
+      await update(cart.id, { 
+        items: [...cart.items, { variant_id: productId, quantity: 1 }] 
+      });
+    } else {
+      await create({ items: [{ variant_id: productId, quantity: 1 }] });
+    }
+    await refresh();
   };
 
   const removeFromCart = (productId: number) => {

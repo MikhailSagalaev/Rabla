@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Layout/Header/Header';
 import Footer from '../../components/Layout/Footer/Footer';
+import * as Yup from 'yup';
+import { useCheckout } from '../../contexts/CheckoutContext';
+import { useMedusaCheckout } from '../../hooks/useMedusaCheckout';
+import { isMobilePhone } from 'validator';
 
 interface DeliveryMethod {
   id: string;
@@ -13,8 +17,27 @@ interface PaymentMethod {
   name: string;
 }
 
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required('Обязательное поле'),
+  phone: Yup.string()
+    .required('Обязательное поле')
+    .matches(/^\+?[0-9]{10,15}$/, 'Некорректный номер телефона'),
+  email: Yup.string()
+    .email('Некорректный email')
+    .required('Обязательное поле'),
+  city: Yup.string().required('Обязательное поле'),
+  street: Yup.string().required('Обязательное поле'),
+  house: Yup.string().required('Обязательное поле'),
+  apartment: Yup.string().required('Обязательное поле'),
+  comment: Yup.string().required('Обязательное поле'),
+  deliveryMethod: Yup.string().required('Обязательное поле'),
+  paymentMethod: Yup.string().required('Обязательное поле'),
+});
+
 const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
+  const { cart } = useCheckout();
+  const { handlePayment } = useMedusaCheckout();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -27,6 +50,7 @@ const CheckoutPage: React.FC = () => {
     deliveryMethod: '',
     paymentMethod: ''
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const deliveryMethods: DeliveryMethod[] = [
     { id: 'address', name: 'Доставка по указанному адресу' }
@@ -45,10 +69,21 @@ const CheckoutPage: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Здесь будет логика отправки заказа
-    console.log(formData);
+  const validatePhone = (phone: string) => {
+    if (!isMobilePhone(phone, 'ru-RU')) {
+      setErrors({ ...errors, phone: 'Неверный формат номера' });
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const { data: paymentSession } = await createPaymentSession(cart.id);
+      await handlePayment(paymentSession);
+    } catch (error) {
+      console.error("Ошибка оформления:", error);
+    }
   };
 
   return (
@@ -89,6 +124,9 @@ const CheckoutPage: React.FC = () => {
                   className="p-4 border border-gray-300 uppercase text-sm"
                   required
                 />
+                {errors.phone && (
+                  <div className="text-red-500 text-sm mt-1">{errors.phone}</div>
+                )}
                 <input
                   type="email"
                   name="email"

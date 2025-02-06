@@ -50,3 +50,25 @@ export interface FeatureCard {
 export interface ProductDetails extends ProductData {
   relatedProducts: ProductData[];
 }
+
+export interface MedusaProduct {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail?: string;
+  variants: ProductVariant[];
+  categories: ProductCategory[];
+  // ... остальные поля из Medusa
+}
+
+export interface ProductVariant {
+  id: string;
+  title: string;
+  prices: ProductPrice[];
+}
+
+export interface ProductCategory {
+  id: string;
+  name: string;
+  description?: string;
+}
